@@ -9,11 +9,18 @@ docker build -t $ImageName $RepoRoot
 
 docker rm -f $ContainerName 2>$null | Out-Null
 
+$EnvFileArgs = @()
+$EnvFilePath = Join-Path $RepoRoot ".env"
+if (Test-Path $EnvFilePath) {
+    $EnvFileArgs = @("--env-file", $EnvFilePath)
+}
+
 docker run `
   --rm `
   --detach `
   --name $ContainerName `
   --publish "${Port}:8000" `
+  @EnvFileArgs `
   $ImageName
 
 Write-Host "Prelegal is running at http://localhost:$Port"

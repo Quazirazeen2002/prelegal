@@ -9,7 +9,9 @@
 .git
 .env
 .env.*
-!.env.example
+**/.env
+**/.env.*
+!**/.env.example
 frontend/vitest.config.ts
 frontend/vitest.setup.ts
 frontend/**/*.test.ts

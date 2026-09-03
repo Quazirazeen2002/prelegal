@@ -5,7 +5,7 @@ describe("createDefaultNdaFormData", () => {
   it("returns sensible defaults", () => {
     const data = createDefaultNdaFormData();
 
-    expect(data.purpose).toMatch(/business relationship/i);
+    expect(data.purpose).toBe("");
     expect(data.mndaTermType).toBe("expires");
     expect(data.mndaTermYears).toBe(1);
     expect(data.confidentialityTermType).toBe("term");

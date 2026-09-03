@@ -10,11 +10,17 @@ docker build -t "$IMAGE_NAME" "$REPO_ROOT"
 
 docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
 
+ENV_FILE_ARGS=()
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  ENV_FILE_ARGS=(--env-file "$REPO_ROOT/.env")
+fi
+
 docker run \
   --rm \
   --detach \
   --name "$CONTAINER_NAME" \
   --publish "$PORT:8000" \
+  "${ENV_FILE_ARGS[@]}" \
   "$IMAGE_NAME"
 
 echo "Prelegal is running at http://localhost:$PORT"

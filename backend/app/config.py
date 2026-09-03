@@ -1,6 +1,12 @@
 import secrets
+from pathlib import Path
 
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# OPENROUTER_API_KEY (used by litellm) lives in the repo-root .env, not backend/.env,
+# so the LLM call works under `uv run uvicorn` regardless of the working directory.
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 
 class Settings(BaseSettings):
