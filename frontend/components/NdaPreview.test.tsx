@@ -31,12 +31,22 @@ describe("NdaPreview", () => {
   });
 
   it("shows the filled-in purpose and effective date as plain field values", () => {
+    render(
+      <NdaPreview
+        blocks={buildNdaDocumentBlocks(
+          sampleData({ purpose: "Evaluating a joint venture." })
+        )}
+      />
+    );
+
+    expect(screen.getByText("Evaluating a joint venture.")).toBeInTheDocument();
+    expect(screen.getByText("September 3, 2026")).toBeInTheDocument();
+  });
+
+  it("shows a placeholder when the purpose hasn't been specified yet", () => {
     render(<NdaPreview blocks={buildNdaDocumentBlocks(sampleData())} />);
 
-    expect(
-      screen.getByText(/Evaluating whether to enter into a business relationship/)
-    ).toBeInTheDocument();
-    expect(screen.getByText("September 3, 2026")).toBeInTheDocument();
+    expect(screen.getByText("[Purpose not specified]")).toBeInTheDocument();
   });
 
   it("shows the filled-in governing law and jurisdiction, each with its label", () => {

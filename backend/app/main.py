@@ -7,11 +7,11 @@ from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.db import init_db
-from app.routers import auth, health
+from app.routers import auth, chat, health
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI):
     init_db()
     yield
 
@@ -28,6 +28,7 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(auth.router)
+app.include_router(chat.router)
 
 static_dir = Path(settings.static_dir)
 if static_dir.is_dir():

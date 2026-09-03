@@ -31,8 +31,7 @@ const emptyParty: PartyInfo = {
 
 export function createDefaultNdaFormData(): NdaFormData {
   return {
-    purpose:
-      "Evaluating whether to enter into a business relationship with the other party.",
+    purpose: "",
     effectiveDate: new Date().toISOString().slice(0, 10),
     mndaTermType: "expires",
     mndaTermYears: 1,
