@@ -8,6 +8,7 @@ From `frontend/`:
 
 - `npm install`
 - `npm run dev` — serves on `http://localhost:3000`
+- `npm test` — runs the automated test suite (Vitest). See also `frontend/MANUAL_TESTING.md` for the manual test checklist.
 
 ## License
 

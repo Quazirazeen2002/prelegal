@@ -15,10 +15,12 @@ const legendClass = "px-1 text-sm font-semibold text-zinc-900";
 
 function PartyFields({
   title,
+  idPrefix,
   value,
   onChange,
 }: {
   title: string;
+  idPrefix: string;
   value: PartyInfo;
   onChange: (party: PartyInfo) => void;
 }) {
@@ -26,8 +28,11 @@ function PartyFields({
     <fieldset className={fieldsetClass}>
       <legend className={legendClass}>{title}</legend>
       <div>
-        <label className={labelClass}>Company</label>
+        <label className={labelClass} htmlFor={`${idPrefix}-company`}>
+          Company
+        </label>
         <input
+          id={`${idPrefix}-company`}
           className={inputClass}
           value={value.company}
           onChange={(e) => onChange({ ...value, company: e.target.value })}
@@ -35,8 +40,11 @@ function PartyFields({
         />
       </div>
       <div>
-        <label className={labelClass}>Print name</label>
+        <label className={labelClass} htmlFor={`${idPrefix}-print-name`}>
+          Print name
+        </label>
         <input
+          id={`${idPrefix}-print-name`}
           className={inputClass}
           value={value.printName}
           onChange={(e) => onChange({ ...value, printName: e.target.value })}
@@ -44,8 +52,11 @@ function PartyFields({
         />
       </div>
       <div>
-        <label className={labelClass}>Title</label>
+        <label className={labelClass} htmlFor={`${idPrefix}-title`}>
+          Title
+        </label>
         <input
+          id={`${idPrefix}-title`}
           className={inputClass}
           value={value.title}
           onChange={(e) => onChange({ ...value, title: e.target.value })}
@@ -53,8 +64,11 @@ function PartyFields({
         />
       </div>
       <div>
-        <label className={labelClass}>Notice address (email or postal)</label>
+        <label className={labelClass} htmlFor={`${idPrefix}-notice-address`}>
+          Notice address (email or postal)
+        </label>
         <input
+          id={`${idPrefix}-notice-address`}
           className={inputClass}
           value={value.noticeAddress}
           onChange={(e) =>
@@ -73,8 +87,11 @@ export default function NdaForm({ data, onChange }: Props) {
       <fieldset className={fieldsetClass}>
         <legend className={legendClass}>Purpose &amp; dates</legend>
         <div>
-          <label className={labelClass}>Purpose</label>
+          <label className={labelClass} htmlFor="purpose">
+            Purpose
+          </label>
           <textarea
+            id="purpose"
             className={inputClass}
             rows={3}
             value={data.purpose}
@@ -82,8 +99,11 @@ export default function NdaForm({ data, onChange }: Props) {
           />
         </div>
         <div>
-          <label className={labelClass}>Effective date</label>
+          <label className={labelClass} htmlFor="effective-date">
+            Effective date
+          </label>
           <input
+            id="effective-date"
             type="date"
             className={inputClass}
             value={data.effectiveDate}
@@ -110,6 +130,7 @@ export default function NdaForm({ data, onChange }: Props) {
           <input
             type="number"
             min={1}
+            aria-label="MNDA term, in years"
             className={`${inputClass} w-20`}
             value={data.mndaTermYears}
             disabled={data.mndaTermType !== "expires"}
@@ -151,6 +172,7 @@ export default function NdaForm({ data, onChange }: Props) {
           <input
             type="number"
             min={1}
+            aria-label="Term of confidentiality, in years"
             className={`${inputClass} w-20`}
             value={data.confidentialityTermYears}
             disabled={data.confidentialityTermType !== "term"}
@@ -194,8 +216,11 @@ export default function NdaForm({ data, onChange }: Props) {
       <fieldset className={fieldsetClass}>
         <legend className={legendClass}>Governing law &amp; jurisdiction</legend>
         <div>
-          <label className={labelClass}>Governing law (state)</label>
+          <label className={labelClass} htmlFor="governing-law">
+            Governing law (state)
+          </label>
           <input
+            id="governing-law"
             className={inputClass}
             value={data.governingLaw}
             onChange={(e) =>
@@ -205,10 +230,11 @@ export default function NdaForm({ data, onChange }: Props) {
           />
         </div>
         <div>
-          <label className={labelClass}>
+          <label className={labelClass} htmlFor="jurisdiction">
             Jurisdiction (city or county and state)
           </label>
           <input
+            id="jurisdiction"
             className={inputClass}
             value={data.jurisdiction}
             onChange={(e) =>
@@ -221,7 +247,11 @@ export default function NdaForm({ data, onChange }: Props) {
 
       <fieldset className={fieldsetClass}>
         <legend className={legendClass}>Modifications (optional)</legend>
+        <label className="sr-only" htmlFor="modifications">
+          Modifications
+        </label>
         <textarea
+          id="modifications"
           className={inputClass}
           rows={2}
           value={data.modifications}
@@ -234,11 +264,13 @@ export default function NdaForm({ data, onChange }: Props) {
 
       <PartyFields
         title="Party 1"
+        idPrefix="party1"
         value={data.party1}
         onChange={(party1) => onChange({ ...data, party1 })}
       />
       <PartyFields
         title="Party 2"
+        idPrefix="party2"
         value={data.party2}
         onChange={(party2) => onChange({ ...data, party2 })}
       />
