@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Mutual Non-Disclosure Agreement",
+    "description": "Standard terms for a mutual non-disclosure agreement, allowing each party to disclose confidential information for an agreed purpose. Pair with mutual-nda-coverpage.md.",
+    "filename": "mutual-nda.md"
+  },
+  {
+    "name": "Mutual Non-Disclosure Agreement Cover Page",
+    "description": "Cover page that captures the deal-specific terms (parties, purpose, effective date) that incorporate the Mutual NDA standard terms by reference.",
+    "filename": "mutual-nda-coverpage.md"
+  },
+  {
+    "name": "Cloud Service Agreement",
+    "description": "Standard terms for a SaaS/cloud service agreement covering access and use of the service, support, user accounts, feedback and usage data, and customer content.",
+    "filename": "csa.md"
+  },
+  {
+    "name": "Service Level Agreement",
+    "description": "Standard terms defining uptime targets, uptime calculation methodology, and support response time commitments for a cloud service.",
+    "filename": "sla.md"
+  },
+  {
+    "name": "Data Processing Agreement",
+    "description": "Standard terms governing the processing of personal data between a controller and processor (or processor and subprocessor), including data protection obligations.",
+    "filename": "dpa.md"
+  },
+  {
+    "name": "Design Partner Agreement",
+    "description": "Standard terms for an early-access design partner program, covering product access, feedback obligations, and fees.",
+    "filename": "design-partner-agreement.md"
+  },
+  {
+    "name": "Professional Services Agreement",
+    "description": "Standard terms for professional services engagements delivered under one or more statements of work, covering services, cooperation, change orders, acceptance, and subcontractors.",
+    "filename": "psa.md"
+  },
+  {
+    "name": "Partnership Agreement",
+    "description": "Standard terms for a business partnership arrangement covering each party's obligations, payment and taxes, and feedback.",
+    "filename": "partnership-agreement.md"
+  },
+  {
+    "name": "Business Associate Agreement",
+    "description": "Standard HIPAA business associate terms governing a provider's permitted uses and disclosures of protected health information (PHI) and required safeguards.",
+    "filename": "baa.md"
+  },
+  {
+    "name": "Software License Agreement",
+    "description": "Standard terms for an on-premises or self-hosted software license, covering license grant, user accounts, feedback and usage data, machine learning use, and open source software.",
+    "filename": "software-license-agreement.md"
+  },
+  {
+    "name": "Pilot Agreement",
+    "description": "Standard terms for a time-limited product pilot or evaluation, covering access, license, user accounts, customer content, feedback, and usage data during the pilot period.",
+    "filename": "pilot-agreement.md"
+  },
+  {
+    "name": "AI Addendum",
+    "description": "Standard addendum supplementing a Common Paper agreement with terms specific to AI services, including use of input/output, restrictions, and model training.",
+    "filename": "ai-addendum.md"
+  }
+]
