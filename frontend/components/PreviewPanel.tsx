@@ -36,7 +36,7 @@ export default function PreviewPanel({ blocks, isComplete, fileName, documentTit
           </span>
         )}
       </div>
-      <div className="max-h-[75vh] overflow-y-auto rounded-sm border border-paper-border bg-paper p-7 shadow-[0_30px_60px_-28px_rgba(1,10,24,0.55)]">
+      <div className="h-[75vh] overflow-y-auto rounded-sm border border-paper-border bg-paper p-7 shadow-[0_30px_60px_-28px_rgba(1,10,24,0.55)]">
         <NdaPreview blocks={blocks} />
       </div>
     </div>

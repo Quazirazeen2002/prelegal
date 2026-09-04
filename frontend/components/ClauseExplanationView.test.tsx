@@ -35,4 +35,20 @@ describe("ClauseExplanationView", () => {
     expect(screen.getByText("Term")).toBeInTheDocument();
     expect(screen.getByText("How long this lasts.")).toBeInTheDocument();
   });
+
+  it("numbers each clause node in a flow, in document order", () => {
+    render(
+      <ClauseExplanationView
+        upload={sampleUpload({
+          clauses: [
+            { clauseTitle: "Term", plainEnglish: "How long this lasts." },
+            { clauseTitle: "Termination", plainEnglish: "How either party can end it." },
+          ],
+        })}
+      />
+    );
+    expect(screen.getByText("2 clauses walked through, in document order")).toBeInTheDocument();
+    expect(screen.getByText("1")).toBeInTheDocument();
+    expect(screen.getByText("2")).toBeInTheDocument();
+  });
 });
