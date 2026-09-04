@@ -14,7 +14,7 @@ function renderInline(text: Inline[]) {
 
 export default function NdaPreview({ blocks }: { blocks: Block[] }) {
   return (
-    <div className="space-y-3 text-sm leading-relaxed text-slate-700">
+    <div className="space-y-3 text-sm leading-relaxed text-paper-ink">
       {blocks.map((block, i) => {
         switch (block.type) {
           case "h1":
@@ -37,7 +37,7 @@ export default function NdaPreview({ blocks }: { blocks: Block[] }) {
             );
           case "label":
             return (
-              <p key={i} className="text-xs italic text-brand-gray">
+              <p key={i} className="text-xs italic text-paper-ink-muted">
                 {block.text}
               </p>
             );
@@ -88,11 +88,11 @@ export default function NdaPreview({ blocks }: { blocks: Block[] }) {
               <table key={i} className="w-full border-collapse text-xs">
                 <thead>
                   <tr>
-                    <th className="border border-slate-200 bg-slate-50 p-2 text-left"></th>
-                    <th className="border border-slate-200 bg-slate-50 p-2 text-left text-brand-navy">
+                    <th className="border border-paper-border bg-paper-overlay-faint p-2 text-left"></th>
+                    <th className="border border-paper-border bg-paper-overlay-faint p-2 text-left text-brand-navy">
                       Party 1
                     </th>
-                    <th className="border border-slate-200 bg-slate-50 p-2 text-left text-brand-navy">
+                    <th className="border border-paper-border bg-paper-overlay-faint p-2 text-left text-brand-navy">
                       Party 2
                     </th>
                   </tr>
@@ -105,13 +105,13 @@ export default function NdaPreview({ blocks }: { blocks: Block[] }) {
                     { label: "Notice Address", key: "noticeAddress" as const },
                   ].map((row) => (
                     <tr key={row.key}>
-                      <td className="border border-slate-200 p-2 font-medium">
+                      <td className="border border-paper-border p-2 font-medium">
                         {row.label}
                       </td>
-                      <td className="border border-slate-200 p-2">
+                      <td className="border border-paper-border p-2">
                         {block.party1[row.key] || "—"}
                       </td>
-                      <td className="border border-slate-200 p-2">
+                      <td className="border border-paper-border p-2">
                         {block.party2[row.key] || "—"}
                       </td>
                     </tr>
@@ -120,10 +120,10 @@ export default function NdaPreview({ blocks }: { blocks: Block[] }) {
               </table>
             );
           case "divider":
-            return <hr key={i} className="my-6 border-slate-200" />;
+            return <hr key={i} className="my-6 border-paper-border" />;
           case "footnote":
             return (
-              <p key={i} className="pt-2 text-xs text-brand-gray">
+              <p key={i} className="pt-2 text-xs text-paper-ink-muted">
                 {block.text}
               </p>
             );

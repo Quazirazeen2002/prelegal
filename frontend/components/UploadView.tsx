@@ -23,7 +23,7 @@ function formatFileSize(bytes: number): string {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  processed: "bg-brand-green/15 text-brand-green",
+  processed: "bg-emerald-500/15 text-emerald-400",
   processing: "bg-brand-yellow/15 text-brand-yellow",
   error: "bg-red-500/15 text-red-300",
 };
@@ -113,8 +113,8 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
 
   if (!user) {
     return (
-      <div className="flex min-h-[24rem] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-border-strong bg-surface/60 p-8 text-center">
-        <p className="text-sm text-ink-muted">Sign in (top right) to upload and analyze documents.</p>
+      <div className="flex min-h-[24rem] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-canvas-border-strong bg-canvas-overlay-faint p-8 text-center">
+        <p className="text-sm text-canvas-ink-muted">Sign in (top right) to upload and analyze documents.</p>
       </div>
     );
   }
@@ -134,22 +134,22 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
             const file = e.dataTransfer.files[0];
             if (file) handleFile(file);
           }}
-          className={`flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-14 text-center transition-colors ${
-            isDragging ? "border-brand-green bg-brand-green/5" : "border-border-strong bg-surface/60"
+          className={`flex flex-col items-center justify-center gap-3 rounded-md border-2 border-dashed p-14 text-center transition-colors ${
+            isDragging ? "border-brand-purple bg-brand-purple/10" : "border-canvas-border-strong bg-canvas-overlay-faint"
           }`}
         >
-          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-green/10 text-3xl">
+          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-purple/15 text-3xl">
             ⬆️
           </span>
-          <p className="text-lg font-semibold text-ink">
+          <p className="font-serif text-lg font-medium text-canvas-ink">
             {isUploading ? "Uploading…" : "Drop legal document here"}
           </p>
-          <p className="text-sm text-ink-muted">or</p>
+          <p className="text-sm text-canvas-ink-muted">or</p>
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="rounded-full bg-brand-green px-5 py-2 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-full bg-brand-purple px-5 py-2 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-purple-dark disabled:cursor-not-allowed disabled:opacity-60"
           >
             Browse files
           </button>
@@ -165,8 +165,8 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
               e.target.value = "";
             }}
           />
-          <p className="text-xs text-ink-muted">Accepted file types: PDF, DOCX, TXT</p>
-          <p className="text-xs text-ink-muted">Max file size: 100MB</p>
+          <p className="text-xs text-canvas-ink-muted">Accepted file types: PDF, DOCX, TXT</p>
+          <p className="text-xs text-canvas-ink-muted">Max file size: 100MB</p>
         </div>
 
         {error && (
@@ -176,25 +176,25 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
         )}
 
         <div className="mt-8">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-muted">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-canvas-ink-muted">
             Recent uploads
           </h2>
-          {uploads === null && <p className="text-sm text-ink-muted">Loading…</p>}
+          {uploads === null && <p className="text-sm text-canvas-ink-muted">Loading…</p>}
           {uploads !== null && uploads.length === 0 && (
-            <p className="text-sm text-ink-muted">No documents uploaded yet.</p>
+            <p className="text-sm text-canvas-ink-muted">No documents uploaded yet.</p>
           )}
           <ul className="space-y-2">
             {uploads?.map((u) => (
               <li
                 key={u.id}
                 onClick={() => handleSelectExisting(u.id)}
-                className={`flex cursor-pointer items-center justify-between gap-3 rounded-xl border p-4 transition-colors hover:border-brand-green/30 hover:bg-brand-green/5 ${
-                  selectedUpload?.id === u.id ? "border-brand-green/40 bg-brand-green/5" : "border-border"
+                className={`flex cursor-pointer items-center justify-between gap-3 rounded-md border p-4 transition-colors hover:border-brand-purple/40 hover:bg-brand-purple/10 ${
+                  selectedUpload?.id === u.id ? "border-brand-purple/50 bg-brand-purple/10" : "border-canvas-border"
                 }`}
               >
                 <div>
-                  <p className="text-sm font-medium text-ink">{u.filename}</p>
-                  <p className="text-xs text-ink-muted">
+                  <p className="text-sm font-medium text-canvas-ink">{u.filename}</p>
+                  <p className="text-xs text-canvas-ink-muted">
                     {u.fileType.toUpperCase()} • {formatFileSize(u.fileSizeBytes)}
                   </p>
                 </div>
@@ -208,7 +208,7 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
                     type="button"
                     onClick={(e) => handleDelete(u.id, e)}
                     aria-label={`Delete ${u.filename}`}
-                    className="text-ink-muted transition-colors hover:text-red-400"
+                    className="text-canvas-ink-muted transition-colors hover:text-red-400"
                   >
                     ✕
                   </button>
@@ -220,28 +220,28 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
       </div>
 
       <div className="space-y-4">
-        <div className="rounded-2xl border border-border bg-surface p-5">
-          <h3 className="mb-3 text-sm font-semibold text-ink">✨ What you&apos;ll get</h3>
+        <div className="rounded-sm border border-paper-border bg-paper p-5">
+          <h3 className="mb-3 font-serif text-sm font-semibold text-paper-ink">What you&apos;ll get</h3>
           <ul className="space-y-3">
             {FEATURES.map((feature) => (
               <li key={feature.title} className="flex gap-3">
                 <span aria-hidden="true">{feature.icon}</span>
                 <div>
-                  <p className="text-sm font-medium text-ink">{feature.title}</p>
-                  <p className="text-xs text-ink-muted">{feature.description}</p>
+                  <p className="text-sm font-medium text-paper-ink">{feature.title}</p>
+                  <p className="text-xs text-paper-ink-muted">{feature.description}</p>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="mt-4 rounded-lg bg-brand-blue/10 p-3 text-xs text-ink-muted">
+          <p className="mt-4 rounded-md bg-brand-blue/10 p-3 text-xs text-paper-ink-muted">
             Our AI is trained on legal principles, not legal advice. Always consult a qualified
             professional for important legal decisions.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-surface p-5">
-          <h3 className="mb-3 text-sm font-semibold text-ink">Your privacy matters</h3>
-          <ul className="space-y-2 text-xs text-ink-muted">
+        <div className="rounded-sm border border-paper-border bg-paper p-5">
+          <h3 className="mb-3 font-serif text-sm font-semibold text-paper-ink">Your privacy matters</h3>
+          <ul className="space-y-2 text-xs text-paper-ink-muted">
             <li>Only you can see documents you upload — they&apos;re tied to your account.</li>
             <li>We never sell your data or share it with third parties.</li>
             <li>Delete an uploaded document at any time from the list above.</li>

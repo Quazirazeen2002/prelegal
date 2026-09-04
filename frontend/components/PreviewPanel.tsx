@@ -7,7 +7,7 @@ import NdaPreview from "./NdaPreview";
 const NdaDownloadButton = dynamic(() => import("./NdaDownloadButton"), {
   ssr: false,
   loading: () => (
-    <span className="inline-flex items-center justify-center rounded-full bg-overlay px-4 py-2 text-sm font-medium text-ink-muted">
+    <span className="inline-flex items-center justify-center rounded-full bg-canvas-overlay px-4 py-2 text-sm font-medium text-canvas-ink-muted">
       Loading…
     </span>
   ),
@@ -27,16 +27,16 @@ export default function PreviewPanel({ blocks, isComplete, fileName, documentTit
   return (
     <div className="lg:sticky lg:top-8 lg:self-start">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">Preview</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-canvas-ink-muted">Preview</h2>
         {isComplete ? (
           <NdaDownloadButton blocks={blocks} fileName={fileName} documentTitle={documentTitle} />
         ) : (
-          <span className="inline-flex items-center justify-center rounded-full bg-overlay px-4 py-2 text-sm font-medium text-ink-muted">
+          <span className="inline-flex items-center justify-center rounded-full bg-canvas-overlay px-4 py-2 text-sm font-medium text-canvas-ink-muted">
             Finish the chat to enable download
           </span>
         )}
       </div>
-      <div className="max-h-[75vh] overflow-y-auto rounded-2xl border border-border bg-white p-7 shadow-xl shadow-black/20">
+      <div className="max-h-[75vh] overflow-y-auto rounded-sm border border-paper-border bg-paper p-7 shadow-[0_30px_60px_-28px_rgba(1,10,24,0.55)]">
         <NdaPreview blocks={blocks} />
       </div>
     </div>

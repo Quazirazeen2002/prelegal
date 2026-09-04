@@ -12,7 +12,7 @@ import ComparisonView from "./ComparisonView";
 import ExportReportView from "./ExportReportView";
 import { UploadedDocumentDetail } from "@/lib/uploads";
 
-type ViewKey = "draft" | "upload" | "summary" | "risks" | "clauses" | "comparison" | "export";
+export type ViewKey = "draft" | "upload" | "summary" | "risks" | "clauses" | "comparison" | "export";
 
 const NAV_ITEMS: { key: ViewKey; label: string; icon: string; title: string; subtitle: string }[] = [
   {
@@ -66,24 +66,21 @@ const NAV_ITEMS: { key: ViewKey; label: string; icon: string; title: string; sub
   },
 ];
 
-export default function AppShell() {
-  const [activeView, setActiveView] = useState<ViewKey>("draft");
+export default function AppShell({ initialView = "draft" }: { initialView?: ViewKey }) {
+  const [activeView, setActiveView] = useState<ViewKey>(initialView);
   const [selectedUpload, setSelectedUpload] = useState<UploadedDocumentDetail | null>(null);
 
   const activeNavItem = NAV_ITEMS.find((item) => item.key === activeView)!;
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <aside className="flex w-64 shrink-0 flex-col border-r border-border px-4 py-6">
-        <div className="mb-8 flex items-center gap-2.5 px-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-sm font-black text-on-brand">
-            P
-          </span>
-          <span className="text-base font-bold tracking-tight text-ink">
+    <div className="flex min-h-screen">
+      <aside className="flex w-64 shrink-0 flex-col border-r border-canvas-border px-4 py-6">
+        <div className="mb-8 px-2">
+          <span className="font-serif text-lg font-semibold italic tracking-tight text-canvas-ink">
             Prelegal
-            <span className="block text-xs font-normal text-ink-muted">
-              Draft new legal agreements, or upload one for instant AI analysis.
-            </span>
+          </span>
+          <span className="mt-1 block text-xs leading-relaxed text-canvas-ink-muted">
+            Draft new legal agreements, or upload one for instant AI analysis.
           </span>
         </div>
 
@@ -94,10 +91,10 @@ export default function AppShell() {
               type="button"
               onClick={() => setActiveView(item.key)}
               aria-current={activeView === item.key ? "page" : undefined}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm font-medium transition-colors ${
                 activeView === item.key
-                  ? "bg-brand-green/10 text-brand-green"
-                  : "text-ink-muted hover:bg-overlay-faint hover:text-ink"
+                  ? "bg-brand-purple/25 text-canvas-ink"
+                  : "text-canvas-ink-muted hover:bg-canvas-overlay-faint hover:text-canvas-ink"
               }`}
             >
               <span aria-hidden="true">{item.icon}</span>
@@ -108,11 +105,11 @@ export default function AppShell() {
       </aside>
 
       <div className="flex-1">
-        <header className="border-b border-border">
+        <header className="border-b border-canvas-border">
           <div className="flex items-center justify-between px-6 py-4 sm:px-8">
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-ink">{activeNavItem.title}</h1>
-              <p className="text-xs text-ink-muted">{activeNavItem.subtitle}</p>
+              <h1 className="font-serif text-lg font-medium tracking-tight text-canvas-ink">{activeNavItem.title}</h1>
+              <p className="text-xs text-canvas-ink-muted">{activeNavItem.subtitle}</p>
             </div>
             <div className="flex items-center gap-3">
               <ThemeToggle />

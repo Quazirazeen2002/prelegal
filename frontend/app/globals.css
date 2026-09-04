@@ -1,72 +1,92 @@
 @import "tailwindcss";
 
-/* Manual, class-based dark mode (toggled by ThemeToggle.tsx via a `.dark`
-   class on <html>) rather than Tailwind's default OS-preference media query. */
-@custom-variant dark (&:where(.dark, .dark *));
+/* Class-based light theme (toggled by ThemeToggle.tsx via a `.light` class
+   on <html>) layered on top of the navy/paper world (see LandingPage.tsx).
+   The "canvas" tokens — chrome, page backgrounds — flip between a dark navy
+   canvas and a light paper-toned one; "paper" tokens (document cards) stay
+   fixed in both, since they represent a physical sheet of paper regardless
+   of the surrounding theme. */
+@custom-variant light (&:where(.light, .light *));
 
 :root {
-  --background: #f7f8fa;
-  --foreground: #14161b;
-  --surface: #ffffff;
-  --surface-hover: #eef0f3;
-  --ink-muted: #6b7280;
-  --border-subtle: rgba(15, 23, 42, 0.12);
-  --border-strong: rgba(15, 23, 42, 0.18);
-  --overlay: rgba(15, 23, 42, 0.06);
-  --overlay-faint: rgba(15, 23, 42, 0.04);
-}
+  --color-canvas-bg: var(--color-brand-navy);
+  --color-canvas-ink: #eef0f6;
+  --color-canvas-ink-muted: #9aa6c4;
+  --color-canvas-border: rgba(238, 240, 246, 0.12);
+  --color-canvas-border-strong: rgba(238, 240, 246, 0.24);
+  --color-canvas-overlay: rgba(238, 240, 246, 0.08);
+  --color-canvas-overlay-faint: rgba(238, 240, 246, 0.04);
 
-.dark {
-  --background: #14161b;
-  --foreground: #f4f5f7;
-  --surface: #1c1f26;
-  --surface-hover: #262a33;
-  --ink-muted: #9aa0ab;
-  --border-subtle: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.15);
-  --overlay: rgba(255, 255, 255, 0.1);
-  --overlay-faint: rgba(255, 255, 255, 0.05);
-}
+  --color-paper: #fbfaf7;
+  --color-paper-ink: #1c1a17;
+  --color-paper-ink-muted: #5b6478;
+  --color-paper-border: rgba(3, 33, 71, 0.14);
+  --color-paper-border-strong: rgba(3, 33, 71, 0.26);
+  --color-paper-overlay: rgba(3, 33, 71, 0.05);
+  --color-paper-overlay-faint: rgba(3, 33, 71, 0.03);
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-del: #b3261e;
+  --color-ins: #128f6d;
 
-  /* Codecademy-inspired shell: neutral surfaces + a bold green accent, now
-     available in both a light and a dark palette (toggled via `.dark`).
-     The document preview itself stays a fixed white "paper" regardless of
-     theme (see PreviewPanel/NdaPreview) — a dark paper would look odd for
-     something meant to read as a printable legal document. See CLAUDE.md
-     "Color Scheme" for the original palette; brand-navy/blue/purple are
-     kept for the parts of the app still using it. */
-  --color-surface: var(--surface);
-  --color-surface-hover: var(--surface-hover);
-  --color-ink: var(--foreground);
-  --color-ink-muted: var(--ink-muted);
-  --color-border: var(--border-subtle);
-  --color-border-strong: var(--border-strong);
-  --color-overlay: var(--overlay);
-  --color-overlay-faint: var(--overlay-faint);
-  --color-brand-green: #1fe0a3;
-  --color-brand-green-dark: #14b384;
   --color-brand-yellow: #ecad0a;
   --color-brand-blue: #209dd7;
   --color-brand-blue-dark: #15789f;
   --color-brand-purple: #753991;
   --color-brand-purple-dark: #5e2d74;
   --color-brand-navy: #032147;
-  --color-brand-navy-light: #0b3866;
   --color-brand-gray: #888888;
-  /* Fixed (not theme-dependent) dark ink for text sitting on the brand-green
-     accent — buttons/badges stay bright green in both themes, so their text
-     color must not flip to light in dark mode. */
-  --color-on-brand: #052e22;
+  --color-on-brand: #fbf7fc;
+
+  --font-serif: var(--font-spectral), Georgia, serif;
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.light {
+  --color-canvas-bg: #eef1f6;
+  --color-canvas-ink: #0f1b2e;
+  --color-canvas-ink-muted: #5f6b83;
+  --color-canvas-border: rgba(3, 33, 71, 0.1);
+  --color-canvas-border-strong: rgba(3, 33, 71, 0.2);
+  --color-canvas-overlay: rgba(3, 33, 71, 0.06);
+  --color-canvas-overlay-faint: rgba(3, 33, 71, 0.035);
+}
+
+@theme inline {
+  --color-canvas-bg: var(--color-canvas-bg);
+  --color-canvas-ink: var(--color-canvas-ink);
+  --color-canvas-ink-muted: var(--color-canvas-ink-muted);
+  --color-canvas-border: var(--color-canvas-border);
+  --color-canvas-border-strong: var(--color-canvas-border-strong);
+  --color-canvas-overlay: var(--color-canvas-overlay);
+  --color-canvas-overlay-faint: var(--color-canvas-overlay-faint);
+
+  --color-paper: var(--color-paper);
+  --color-paper-ink: var(--color-paper-ink);
+  --color-paper-ink-muted: var(--color-paper-ink-muted);
+  --color-paper-border: var(--color-paper-border);
+  --color-paper-border-strong: var(--color-paper-border-strong);
+  --color-paper-overlay: var(--color-paper-overlay);
+  --color-paper-overlay-faint: var(--color-paper-overlay-faint);
+
+  --color-del: var(--color-del);
+  --color-ins: var(--color-ins);
+
+  --color-brand-yellow: var(--color-brand-yellow);
+  --color-brand-blue: var(--color-brand-blue);
+  --color-brand-blue-dark: var(--color-brand-blue-dark);
+  --color-brand-purple: var(--color-brand-purple);
+  --color-brand-purple-dark: var(--color-brand-purple-dark);
+  --color-brand-navy: var(--color-brand-navy);
+  --color-brand-gray: var(--color-brand-gray);
+  --color-on-brand: var(--color-on-brand);
+
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: var(--color-canvas-bg);
+  color: var(--color-canvas-ink);
+  font-family: var(--font-sans);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }

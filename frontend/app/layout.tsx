@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Spectral, Public_Sans } from "next/font/google";
 import Script from "next/script";
 import { AuthProvider } from "@/components/AuthContext";
 import "./globals.css";
@@ -7,19 +7,22 @@ import "./globals.css";
 const THEME_INIT_SCRIPT = `
   try {
     var stored = localStorage.getItem("theme");
-    var dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.classList.toggle("dark", dark);
+    var light = stored ? stored === "light" : !window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.classList.toggle("light", light);
   } catch (e) {}
 `;
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spectral = Spectral({
+  variable: "--font-spectral",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const publicSans = Public_Sans({
+  variable: "--font-public-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${spectral.variable} ${publicSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
