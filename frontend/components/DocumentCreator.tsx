@@ -201,25 +201,40 @@ export default function DocumentCreator() {
           <ChatPanel messages={messages} onMessagesChange={setMessages} onSend={handleSend} />
 
           {phase.kind === "detecting" && (
-            <div className="flex min-h-[24rem] flex-col items-center justify-center gap-3 rounded-md border border-dashed border-canvas-border-strong bg-canvas-overlay-faint p-8 text-center lg:sticky lg:top-8 lg:self-start">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-purple/15 text-2xl">
-                📄
-              </span>
-              <p className="text-sm text-canvas-ink-muted">
-                Tell the assistant what document you need, and a live preview will appear here.
-              </p>
+            <div className="lg:sticky lg:top-8 lg:self-start">
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-canvas-ink-muted">Preview</h2>
+              </div>
+              <div className="flex h-[75vh] flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-canvas-border-strong bg-canvas-overlay-faint p-8 text-center">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-purple/15 text-2xl">
+                  📄
+                </span>
+                <p className="text-sm text-canvas-ink-muted">
+                  Tell the assistant what document you need, and a live preview will appear here.
+                </p>
+              </div>
             </div>
           )}
 
           {phase.kind === "generic-loading" && (
-            <div className="flex min-h-[24rem] items-center justify-center rounded-md border border-dashed border-canvas-border-strong bg-canvas-overlay-faint p-8 text-sm text-canvas-ink-muted lg:sticky lg:top-8 lg:self-start">
-              Loading the document template…
+            <div className="lg:sticky lg:top-8 lg:self-start">
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-canvas-ink-muted">Preview</h2>
+              </div>
+              <div className="flex h-[75vh] items-center justify-center rounded-sm border border-dashed border-canvas-border-strong bg-canvas-overlay-faint p-8 text-sm text-canvas-ink-muted">
+                Loading the document template…
+              </div>
             </div>
           )}
 
           {phase.kind === "generic-error" && (
-            <div className="rounded-md border border-del/30 bg-del/10 p-6 text-sm text-red-300 lg:sticky lg:top-8 lg:self-start">
-              Something went wrong loading this document&apos;s template. Please refresh and try again.
+            <div className="lg:sticky lg:top-8 lg:self-start">
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-canvas-ink-muted">Preview</h2>
+              </div>
+              <div className="h-[75vh] rounded-sm border border-del/30 bg-del/10 p-6 text-sm text-red-300">
+                Something went wrong loading this document&apos;s template. Please refresh and try again.
+              </div>
             </div>
           )}
 

@@ -6,6 +6,7 @@ import {
   UploadedDocumentDetail,
   UploadedDocumentSummary,
   deleteUpload,
+  formatFileSize,
   getUpload,
   listUploads,
   uploadDocument,
@@ -15,12 +16,6 @@ type Props = {
   selectedUpload: UploadedDocumentDetail | null;
   onSelectUpload: (upload: UploadedDocumentDetail | null) => void;
 };
-
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
 
 const STATUS_STYLES: Record<string, string> = {
   processed: "bg-emerald-500/15 text-emerald-400",

@@ -45,6 +45,12 @@ export type UploadedDocumentDetail = UploadedDocumentSummary & {
   comparison: Comparison | null;
 };
 
+export function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 async function parseJsonOrThrow<T>(response: Response, fallbackMessage: string): Promise<T> {
   if (!response.ok) {
     const body = await response.json().catch(() => null);

@@ -34,4 +34,35 @@ describe("SummaryView", () => {
     expect(screen.getByText("This is a plain-English summary.")).toBeInTheDocument();
     expect(screen.getByText("agreement.pdf")).toBeInTheDocument();
   });
+
+  it("renders a stat tile row and no risk-composition chart when there are no risks", () => {
+    render(
+      <SummaryView
+        upload={sampleUpload({
+          summary: "Summary text.",
+          matchedCatalogName: "Cloud Service Agreement",
+          risks: [],
+          clauses: [{ clauseTitle: "Term", plainEnglish: "How long this lasts." }],
+        })}
+      />
+    );
+    expect(screen.getByText("Cloud Service Agreement")).toBeInTheDocument();
+    expect(screen.getByText("Risks found")).toBeInTheDocument();
+    expect(screen.getByText("Clauses reviewed")).toBeInTheDocument();
+    expect(screen.queryByText("Risk composition")).not.toBeInTheDocument();
+  });
+
+  it("renders the risk-composition chart when risks are present", () => {
+    render(
+      <SummaryView
+        upload={sampleUpload({
+          summary: "Summary text.",
+          risks: [
+            { title: "Uncapped liability", description: "No cap.", severity: "high", relatedClause: null },
+          ],
+        })}
+      />
+    );
+    expect(screen.getByText("Risk composition")).toBeInTheDocument();
+  });
 });

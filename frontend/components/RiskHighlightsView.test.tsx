@@ -49,4 +49,19 @@ describe("RiskHighlightsView", () => {
     expect(screen.getByText("high")).toBeInTheDocument();
     expect(screen.getByText(/Section 8/)).toBeInTheDocument();
   });
+
+  it("renders the risk-composition chart with a total count above the list", () => {
+    render(
+      <RiskHighlightsView
+        upload={sampleUpload({
+          risks: [
+            { title: "Uncapped liability", description: "No cap.", severity: "high", relatedClause: null },
+            { title: "Short notice period", description: "Only 7 days.", severity: "low", relatedClause: null },
+          ],
+        })}
+      />
+    );
+    expect(screen.getByText("Risk composition")).toBeInTheDocument();
+    expect(screen.getByText("2 risks total")).toBeInTheDocument();
+  });
 });
