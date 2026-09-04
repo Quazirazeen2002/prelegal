@@ -4,12 +4,22 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Block } from "@/lib/nda-content";
 import NdaPdfDocument from "./NdaPdfDocument";
 
-export default function NdaDownloadButton({ blocks }: { blocks: Block[] }) {
+type Props = {
+  blocks: Block[];
+  fileName?: string;
+  documentTitle?: string;
+};
+
+export default function NdaDownloadButton({
+  blocks,
+  fileName = "mutual-nda.pdf",
+  documentTitle,
+}: Props) {
   return (
     <PDFDownloadLink
-      document={<NdaPdfDocument blocks={blocks} />}
-      fileName="mutual-nda.pdf"
-      className="inline-flex items-center justify-center rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700"
+      document={<NdaPdfDocument blocks={blocks} title={documentTitle} />}
+      fileName={fileName}
+      className="inline-flex items-center justify-center rounded-full bg-brand-blue px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-blue-dark"
     >
       {({ loading }) => (loading ? "Preparing PDF…" : "Download PDF")}
     </PDFDownloadLink>

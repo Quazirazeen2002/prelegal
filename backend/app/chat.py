@@ -1,5 +1,4 @@
-from litellm import completion
-
+from app.llm import call_structured
 from app.nda_schemas import (
     ChatCompletionResult,
     ChatMessageIn,
@@ -9,11 +8,11 @@ from app.nda_schemas import (
     PartyInfoExtraction,
 )
 
-MODEL = "openrouter/openai/gpt-oss-120b"
-EXTRA_BODY = {"provider": {"order": ["cerebras"]}}
-
 SYSTEM_PROMPT_TEMPLATE = """You are a friendly assistant helping a user fill in a Common Paper Mutual \
 Non-Disclosure Agreement (NDA) through freeform conversation, instead of a form.
+
+Every reply you send must end by asking a specific question or proposing a concrete next step — never \
+leave the user without a clear idea of what to say next.
 
 Gather these fields naturally over the conversation, asking one or two related questions at a time \
 rather than listing everything at once:
@@ -94,14 +93,4 @@ def get_ai_response(messages: list[ChatMessageIn], known_fields: NdaFormData) ->
     llm_messages = [{"role": "system", "content": build_system_prompt(known_fields)}] + [
         {"role": message.role, "content": message.content} for message in messages
     ]
-
-    response = completion(
-        model=MODEL,
-        messages=llm_messages,
-        response_format=ChatCompletionResult,
-        reasoning_effort="low",
-        max_tokens=2048,
-        extra_body=EXTRA_BODY,
-    )
-    content = response.choices[0].message.content
-    return ChatCompletionResult.model_validate_json(content)
+    return call_structured(ChatCompletionResult, llm_messages)
