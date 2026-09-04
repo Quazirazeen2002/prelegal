@@ -41,7 +41,7 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
   }
 
   return (
-    <div className="flex h-[75vh] flex-col overflow-hidden rounded-2xl border border-slate-200/70 bg-white shadow-lg shadow-slate-900/5">
+    <div className="flex h-[75vh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-xl shadow-black/20">
       <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
         {messages.map((message, i) => (
           <div
@@ -51,8 +51,8 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
             <p
               className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
                 message.role === "user"
-                  ? "rounded-br-sm bg-brand-blue text-white"
-                  : "rounded-bl-sm bg-slate-100 text-slate-800"
+                  ? "rounded-br-sm bg-brand-green font-medium text-background"
+                  : "rounded-bl-sm bg-surface-hover text-ink"
               }`}
             >
               {message.content}
@@ -61,10 +61,10 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <p className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-slate-100 px-4 py-2.5 text-sm text-brand-gray">
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-gray/60 [animation-delay:-0.3s]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-gray/60 [animation-delay:-0.15s]" />
-              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-gray/60" />
+            <p className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-surface-hover px-4 py-2.5 text-sm text-ink-muted">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-green/70 [animation-delay:-0.3s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-green/70 [animation-delay:-0.15s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-brand-green/70" />
             </p>
           </div>
         )}
@@ -72,18 +72,18 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
       </div>
 
       {error && (
-        <p role="alert" className="border-t border-red-200 bg-red-50 px-5 py-2.5 text-sm text-red-700">
+        <p role="alert" className="border-t border-red-500/20 bg-red-500/10 px-5 py-2.5 text-sm text-red-300">
           {error}
         </p>
       )}
 
-      <form onSubmit={handleSubmit} className="flex gap-2 border-t border-slate-200 bg-slate-50/60 p-3">
+      <form onSubmit={handleSubmit} className="flex gap-2 border-t border-white/10 bg-black/20 p-3">
         <label className="sr-only" htmlFor="chat-input">
           Message
         </label>
         <input
           id="chat-input"
-          className="flex-1 rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm transition-shadow focus:border-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue/30"
+          className="flex-1 rounded-full border border-white/10 bg-surface-hover px-4 py-2.5 text-sm text-ink shadow-sm transition-shadow placeholder:text-ink-muted focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your reply…"
@@ -92,7 +92,7 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="rounded-full bg-brand-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-blue-dark disabled:cursor-not-allowed disabled:bg-slate-300"
+          className="rounded-full bg-brand-green px-5 py-2.5 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-ink-muted"
         >
           Send
         </button>

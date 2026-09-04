@@ -20,7 +20,7 @@ export default function UserMenu({ onOpenMyDocuments }: Props) {
         <button
           type="button"
           onClick={() => setShowAuthModal(true)}
-          className="rounded-full bg-brand-blue px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-blue-dark"
+          className="rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark"
         >
           Sign in
         </button>

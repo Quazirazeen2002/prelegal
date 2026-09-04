@@ -165,22 +165,22 @@ export default function DocumentCreator() {
   const isComplete = phase.kind === "mutual-nda" ? ndaIsComplete : phase.kind === "generic" && genericIsComplete;
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-black/20 bg-brand-navy">
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-blue text-sm font-bold text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-sm font-black text-background">
               P
             </span>
-            <span className="text-base font-semibold tracking-tight text-white">
-              Prelegal <span className="font-normal text-white/50">Document Assistant</span>
+            <span className="text-base font-bold tracking-tight text-ink">
+              Prelegal <span className="font-normal text-ink-muted">Document Assistant</span>
             </span>
           </div>
           <div className="flex items-center gap-5">
             <button
               type="button"
               onClick={handleNewDocument}
-              className="rounded-md px-3 py-1.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+              className="rounded-full px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
             >
               New Document
             </button>
@@ -191,10 +191,10 @@ export default function DocumentCreator() {
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight text-brand-navy sm:text-3xl">
-            Draft a legal document in minutes
+          <h1 className="text-3xl font-black tracking-tight text-ink sm:text-4xl">
+            Draft a legal document <span className="text-brand-green">in minutes</span>
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-brand-gray">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted">
             Chat with the assistant below — a Mutual NDA, a Cloud Service Agreement, a DPA, and more.
             The document on the right updates live as you go, and you can download it as a polished
             PDF once everything&apos;s gathered.
@@ -205,24 +205,24 @@ export default function DocumentCreator() {
           <ChatPanel messages={messages} onMessagesChange={setMessages} onSend={handleSend} />
 
           {phase.kind === "detecting" && (
-            <div className="flex min-h-[24rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-white/60 p-8 text-center lg:sticky lg:top-8 lg:self-start">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-blue/10 text-2xl">
+            <div className="flex min-h-[24rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-surface/60 p-8 text-center lg:sticky lg:top-8 lg:self-start">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-green/10 text-2xl">
                 📄
               </span>
-              <p className="text-sm text-brand-gray">
+              <p className="text-sm text-ink-muted">
                 Tell the assistant what document you need, and a live preview will appear here.
               </p>
             </div>
           )}
 
           {phase.kind === "generic-loading" && (
-            <div className="flex min-h-[24rem] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/60 p-8 text-sm text-brand-gray lg:sticky lg:top-8 lg:self-start">
+            <div className="flex min-h-[24rem] items-center justify-center rounded-2xl border border-dashed border-white/15 bg-surface/60 p-8 text-sm text-ink-muted lg:sticky lg:top-8 lg:self-start">
               Loading the document template…
             </div>
           )}
 
           {phase.kind === "generic-error" && (
-            <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-700 lg:sticky lg:top-8 lg:self-start">
+            <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-6 text-sm text-red-300 lg:sticky lg:top-8 lg:self-start">
               Something went wrong loading this document&apos;s template. Please refresh and try again.
             </div>
           )}
@@ -246,16 +246,16 @@ export default function DocumentCreator() {
         {user && isComplete && (
           <div className="mt-6 flex items-center justify-end gap-3">
             {saveState === "saved" && (
-              <span className="text-sm font-medium text-emerald-700">Saved!</span>
+              <span className="text-sm font-medium text-brand-green">Saved!</span>
             )}
             {saveState === "error" && (
-              <span className="text-sm font-medium text-red-600">Could not save. Try again.</span>
+              <span className="text-sm font-medium text-red-400">Could not save. Try again.</span>
             )}
             <button
               type="button"
               onClick={handleSave}
               disabled={saveState === "saving"}
-              className="rounded-lg border border-brand-purple px-4 py-2 text-sm font-semibold text-brand-purple shadow-sm transition-colors hover:bg-brand-purple hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-full bg-brand-green px-5 py-2 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saveState === "saving" ? "Saving…" : "Save to My Documents"}
             </button>
