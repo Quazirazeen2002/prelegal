@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import ChatPanel from "./ChatPanel";
 import PreviewPanel from "./PreviewPanel";
-import UserMenu from "./UserMenu";
 import MyDocumentsModal from "./MyDocumentsModal";
 import { useAuth } from "./AuthContext";
 import { ChatMessage, sendChatMessage } from "@/lib/chat";
@@ -165,32 +164,9 @@ export default function DocumentCreator() {
   const isComplete = phase.kind === "mutual-nda" ? ndaIsComplete : phase.kind === "generic" && genericIsComplete;
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-white/10">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-sm font-black text-background">
-              P
-            </span>
-            <span className="text-base font-bold tracking-tight text-ink">
-              Prelegal <span className="font-normal text-ink-muted">Document Assistant</span>
-            </span>
-          </div>
-          <div className="flex items-center gap-5">
-            <button
-              type="button"
-              onClick={handleNewDocument}
-              className="rounded-full px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
-            >
-              New Document
-            </button>
-            <UserMenu onOpenMyDocuments={() => setShowMyDocuments(true)} />
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <div className="mb-8">
+    <div>
+      <div className="mb-8 flex items-start justify-between gap-4">
+        <div>
           <h1 className="text-3xl font-black tracking-tight text-ink sm:text-4xl">
             Draft a legal document <span className="text-brand-green">in minutes</span>
           </h1>
@@ -200,7 +176,27 @@ export default function DocumentCreator() {
             PDF once everything&apos;s gathered.
           </p>
         </div>
+        <div className="flex shrink-0 items-center gap-2">
+          {user && (
+            <button
+              type="button"
+              onClick={() => setShowMyDocuments(true)}
+              className="rounded-full border border-white/15 px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
+            >
+              My Documents
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={handleNewDocument}
+            className="rounded-full border border-white/15 px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
+          >
+            New Document
+          </button>
+        </div>
+      </div>
 
+      <div>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <ChatPanel messages={messages} onMessagesChange={setMessages} onSend={handleSend} />
 
@@ -261,7 +257,7 @@ export default function DocumentCreator() {
             </button>
           </div>
         )}
-      </main>
+      </div>
 
       {showMyDocuments && (
         <MyDocumentsModal onClose={() => setShowMyDocuments(false)} onLoad={handleLoadDocument} />

@@ -4,11 +4,7 @@ import { useState } from "react";
 import { useAuth } from "./AuthContext";
 import AuthModal from "./AuthModal";
 
-type Props = {
-  onOpenMyDocuments: () => void;
-};
-
-export default function UserMenu({ onOpenMyDocuments }: Props) {
+export default function UserMenu() {
   const { user, signOut, isLoading } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
@@ -31,18 +27,11 @@ export default function UserMenu({ onOpenMyDocuments }: Props) {
 
   return (
     <div className="flex items-center gap-4 text-sm">
-      <button
-        type="button"
-        onClick={onOpenMyDocuments}
-        className="font-medium text-white/90 transition-colors hover:text-white hover:underline"
-      >
-        My Documents
-      </button>
-      <span className="hidden text-white/50 sm:inline">{user.email}</span>
+      <span className="hidden text-ink-muted sm:inline">{user.email}</span>
       <button
         type="button"
         onClick={() => signOut()}
-        className="rounded-full border border-white/25 px-3 py-1.5 font-medium text-white/90 transition-colors hover:bg-white/10"
+        className="rounded-full border border-white/15 px-3 py-1.5 font-medium text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
       >
         Sign out
       </button>

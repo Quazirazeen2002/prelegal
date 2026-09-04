@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.db import init_db
-from app.routers import auth, chat, document_chat, documents, health
+from app.routers import auth, chat, document_chat, documents, health, uploads
 
 
 @asynccontextmanager
@@ -31,6 +31,7 @@ app.include_router(auth.router)
 app.include_router(chat.router)
 app.include_router(document_chat.router)
 app.include_router(documents.router)
+app.include_router(uploads.router)
 
 static_dir = Path(settings.static_dir)
 if static_dir.is_dir():

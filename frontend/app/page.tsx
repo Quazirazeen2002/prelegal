@@ -1,9 +1,5 @@
-import DocumentCreator from "@/components/DocumentCreator";
+import AppShell from "@/components/AppShell";
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-zinc-50">
-      <DocumentCreator />
-    </div>
-  );
+  return <AppShell />;
 }

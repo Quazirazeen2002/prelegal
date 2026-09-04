@@ -8,7 +8,7 @@ The available documents are covered in the catalog.json file in the project root
 
 @catalog.json
 
-The current implementation supports all 11 document types via AI chat with full user authentication and document persistence.
+The current implementation supports all 11 document types via AI chat with full user authentication and document persistence. Beyond drafting, the app also supports uploading an existing legal document for AI analysis (summary, risk highlights, clause-by-clause explanation, comparison against the closest catalog template, and a downloadable PDF report). A sidebar-based app shell hosts both modes: "Draft a Document" and "Document Upload" (plus its Summary/Risk Highlights/Clause Explanation/Comparison/Export Report sub-views).
 
 ## Development process
 
@@ -97,6 +97,16 @@ Backend available at http://localhost:8000
 - Decided scope: drafting (chat, live preview, PDF download) stays open to anonymous users; signing in only gates saving/loading documents — there is no login wall on the core flow.
 - Brand color scheme applied (`app/globals.css`'s `--color-brand-*` tokens, matching the "Color Scheme" section above, which was previously defined but never used): headings, primary buttons, and muted text across the new and touched components. This is a light-touch pass, not an exhaustive re-skin of every element.
 
+### Completed (Document Upload & Analysis)
+
+- `AppShell.tsx` is now the app's root component (`app/page.tsx` just renders it): a fixed sidebar (Draft a Document, Document Upload, Summary, Risk Highlights, Clause Explanation, Comparison, Export Report) drives an `activeView` state switching between `DocumentCreator` (the existing drafting flow, unchanged in behavior) and the new upload/analysis views. `UserMenu.tsx` moved out of `DocumentCreator` into the shell's shared header.
+- Upload requires sign-in (matching the existing "gate saving, not drafting" pattern from PL-7): `UploadView.tsx` prompts anonymous users to sign in rather than accepting a file.
+- `backend/app/document_parsing.py`: extracts text from `.pdf` (`pypdf`), `.docx` (`python-docx`), and `.txt` uploads; rejects unsupported types, empty documents, and files over 100MB.
+- `backend/app/document_analysis.py`: four Structured Outputs calls (via the same `call_structured()` helper from PL-6) per uploaded document — `match_catalog_type` (closest of the 11 catalog types, or none), `generate_summary` (plain-English, plain-text overview), `detect_risks` (title/description/severity/related-clause), `explain_clauses` (plain-English explanation per clause). If a catalog type is matched, `compare_to_template` reads that template's real `templates/*.md` text and asks the model to identify material deviations (missing protections, unusual obligations) rather than every wording difference.
+- `backend/app/models.py`'s `UploadedDocument` table stores the extracted text and all analysis results (JSON columns for risks/clauses/comparison) per user, with a `status` of `processing`/`processed`/`error`; `backend/app/routers/uploads.py` runs the full extract-then-analyze pipeline synchronously inside `POST /api/uploads` (this makes the request take ~30-45s for a typical document — a deliberate simplicity-over-latency trade-off, not a bug) and exposes list/get/delete, all ownership-scoped like `/api/documents`.
+- Frontend views (`SummaryView.tsx`, `RiskHighlightsView.tsx`, `ClauseExplanationView.tsx`, `ComparisonView.tsx`, `ExportReportView.tsx`) share `AnalysisStateGate.tsx` to render the right state (no document selected / still processing / analysis failed / results) consistently. `ExportReportView.tsx` downloads a combined PDF report via `AnalysisReportPdfDocument.tsx` (`@react-pdf/renderer`, following the same pattern as the existing `NdaPdfDocument.tsx`).
+- The upload UI deliberately does not claim any compliance certification (no SOC2/GDPR/ISO27001 badges, no "AES-256 encrypted" claims) since the project holds none — the "Your privacy matters" panel states only what's actually true (documents are processed to generate the analysis, not shared beyond that).
+
 ### Current API Endpoints
 
 - `POST /api/auth/signup` - Create new user account
@@ -112,4 +122,8 @@ Backend available at http://localhost:8000
 - `GET /api/documents/{id}` - Get one saved document (auth required, must be owned by the caller)
 - `PUT /api/documents/{id}` - Update a saved document's title/fields (auth required, ownership checked)
 - `DELETE /api/documents/{id}` - Delete a saved document (auth required, ownership checked)
+- `GET /api/uploads` - List the current user's uploaded documents (auth required)
+- `POST /api/uploads` - Upload a document, extract its text, and run the full analysis pipeline (auth required)
+- `GET /api/uploads/{id}` - Get one uploaded document's analysis (auth required, ownership checked)
+- `DELETE /api/uploads/{id}` - Delete an uploaded document (auth required, ownership checked)
 - `GET /api/health` - Health check
