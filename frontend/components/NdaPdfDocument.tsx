@@ -1,5 +1,9 @@
 import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
-import { Block, Inline } from "@/lib/nda-content";
+import { Block, Inline } from "@/lib/document-blocks";
+
+function clauseDepth(label: string): number {
+  return (label.match(/\./g)?.length ?? 0) + (label.match(/\(/g)?.length ?? 0);
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -49,9 +53,14 @@ function InlineText({ text }: { text: Inline[] }) {
   );
 }
 
-export default function NdaPdfDocument({ blocks }: { blocks: Block[] }) {
+type Props = {
+  blocks: Block[];
+  title?: string;
+};
+
+export default function NdaPdfDocument({ blocks, title = "Mutual Non-Disclosure Agreement" }: Props) {
   return (
-    <Document title="Mutual Non-Disclosure Agreement">
+    <Document title={title}>
       <Page size="A4" style={styles.page} wrap>
         {blocks.map((block, i) => {
           switch (block.type) {
@@ -90,6 +99,14 @@ export default function NdaPdfDocument({ blocks }: { blocks: Block[] }) {
                 <View key={i} style={styles.p}>
                   <InlineText
                     text={[`${block.number}. `, ...block.text]}
+                  />
+                </View>
+              );
+            case "clause":
+              return (
+                <View key={i} style={[styles.p, { marginLeft: clauseDepth(block.label) * 14 }]}>
+                  <InlineText
+                    text={[`${block.label}${block.label.endsWith(")") ? "" : "."} `, ...block.text]}
                   />
                 </View>
               );

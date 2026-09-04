@@ -1,6 +1,6 @@
 # prelegal
 
-A dataset of Common Paper legal document templates (`templates/`, catalogued in `catalog.json`), plus a full-stack app that prototypes a Mutual NDA creator: chat with an AI assistant, watch the NDA populate live as it gathers the details, and download it as a PDF once it's complete.
+A dataset of Common Paper legal document templates (`templates/`, catalogued in `catalog.json`), plus a full-stack app that drafts any of the 11 cataloged document types: chat with an AI assistant, watch the document populate live as it gathers the details, and download it as a PDF once it's complete. Drafting works anonymously; signing in additionally lets you save documents and load them back later from "My Documents".
 
 The chat is powered by an LLM (via LiteLLM/OpenRouter, Cerebras inference), so an `OPENROUTER_API_KEY` must be set in a repo-root `.env` file for the chat to work (see `backend/.env.example`).
 

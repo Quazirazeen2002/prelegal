@@ -46,7 +46,7 @@ def mock_completion(monkeypatch: pytest.MonkeyPatch):
             calls.append(kwargs)
             return _fake_completion(result)
 
-        monkeypatch.setattr("app.chat.completion", fake)
+        monkeypatch.setattr("app.llm.completion", fake)
         return calls
 
     return _install
@@ -160,7 +160,7 @@ def test_llm_failure_returns_502(client: TestClient, monkeypatch: pytest.MonkeyP
     def raise_error(*_args, **_kwargs):
         raise RuntimeError("upstream boom")
 
-    monkeypatch.setattr("app.chat.completion", raise_error)
+    monkeypatch.setattr("app.llm.completion", raise_error)
 
     response = client.post(
         "/api/chat/message",

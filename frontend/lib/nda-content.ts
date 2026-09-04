@@ -1,25 +1,7 @@
-import { NdaFormData, PartyInfo, formatEffectiveDate, orPlaceholder } from "./nda";
+import { NdaFormData, formatEffectiveDate, orPlaceholder } from "./nda";
+import type { Block, Inline } from "./document-blocks";
 
-/**
- * Structured, renderer-agnostic representation of the NDA document so the
- * on-screen HTML preview and the downloadable PDF render identical legal
- * text from a single source instead of duplicating it per-renderer.
- */
-
-export type Inline = string | { term: string };
-
-export type Block =
-  | { type: "h1"; text: string }
-  | { type: "h2"; text: string }
-  | { type: "h3"; text: string }
-  | { type: "p"; text: Inline[] }
-  | { type: "label"; text: string }
-  | { type: "olItem"; number: number; text: Inline[] }
-  | { type: "checklist"; items: { checked: boolean; text: string }[] }
-  | { type: "fieldValue"; label: string; value: string }
-  | { type: "signatureTable"; party1: PartyInfo; party2: PartyInfo }
-  | { type: "divider" }
-  | { type: "footnote"; text: string };
+export type { Block, Inline };
 
 export function buildCoverPageBlocks(data: NdaFormData): Block[] {
   const effectiveDate = formatEffectiveDate(data.effectiveDate);
