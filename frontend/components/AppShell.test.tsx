@@ -42,6 +42,25 @@ describe("AppShell", () => {
     expect(screen.getByText(/Sign in.*to upload and analyze/)).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: /Risk Highlights/ }));
-    expect(await screen.findByText(/Upload a document first/)).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Risk Highlights" })).toBeInTheDocument();
+  });
+
+  it("keeps a view's state when navigating away and back", async () => {
+    const user = userEvent.setup();
+    vi.stubGlobal("fetch", vi.fn().mockReturnValue(jsonResponse({ detail: "no" }, false)));
+
+    render(
+      <AuthProvider>
+        <AppShell />
+      </AuthProvider>
+    );
+    const input = await screen.findByPlaceholderText("Type your reply…");
+    await user.type(input, "draft in progress");
+
+    await user.click(screen.getByRole("button", { name: /Document Upload/ }));
+    await screen.findByText("Upload your legal document and let AI simplify the complex.");
+
+    await user.click(screen.getByRole("button", { name: /Draft a Document/ }));
+    expect(await screen.findByPlaceholderText("Type your reply…")).toHaveValue("draft in progress");
   });
 });

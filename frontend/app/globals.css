@@ -1,8 +1,31 @@
 @import "tailwindcss";
 
+/* Manual, class-based dark mode (toggled by ThemeToggle.tsx via a `.dark`
+   class on <html>) rather than Tailwind's default OS-preference media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  --background: #f7f8fa;
+  --foreground: #14161b;
+  --surface: #ffffff;
+  --surface-hover: #eef0f3;
+  --ink-muted: #6b7280;
+  --border-subtle: rgba(15, 23, 42, 0.12);
+  --border-strong: rgba(15, 23, 42, 0.18);
+  --overlay: rgba(15, 23, 42, 0.06);
+  --overlay-faint: rgba(15, 23, 42, 0.04);
+}
+
+.dark {
   --background: #14161b;
   --foreground: #f4f5f7;
+  --surface: #1c1f26;
+  --surface-hover: #262a33;
+  --ink-muted: #9aa0ab;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --overlay: rgba(255, 255, 255, 0.1);
+  --overlay-faint: rgba(255, 255, 255, 0.05);
 }
 
 @theme inline {
@@ -11,16 +34,21 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Codecademy-inspired dark shell: charcoal surfaces + a bold green accent.
-     The document preview itself stays light (see PreviewPanel/NdaPreview) —
-     a dark "paper" would look odd for something meant to read as a printable
-     legal document. See CLAUDE.md "Color Scheme" for the original palette;
-     brand-navy/blue/purple are kept for the parts of the app still using it. */
-  --color-surface: #1c1f26;
-  --color-surface-hover: #262a33;
-  --color-border-dark: #2e323d;
-  --color-ink: #f4f5f7;
-  --color-ink-muted: #9aa0ab;
+  /* Codecademy-inspired shell: neutral surfaces + a bold green accent, now
+     available in both a light and a dark palette (toggled via `.dark`).
+     The document preview itself stays a fixed white "paper" regardless of
+     theme (see PreviewPanel/NdaPreview) — a dark paper would look odd for
+     something meant to read as a printable legal document. See CLAUDE.md
+     "Color Scheme" for the original palette; brand-navy/blue/purple are
+     kept for the parts of the app still using it. */
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-ink: var(--foreground);
+  --color-ink-muted: var(--ink-muted);
+  --color-border: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-overlay: var(--overlay);
+  --color-overlay-faint: var(--overlay-faint);
   --color-brand-green: #1fe0a3;
   --color-brand-green-dark: #14b384;
   --color-brand-yellow: #ecad0a;
@@ -31,6 +59,10 @@
   --color-brand-navy: #032147;
   --color-brand-navy-light: #0b3866;
   --color-brand-gray: #888888;
+  /* Fixed (not theme-dependent) dark ink for text sitting on the brand-green
+     accent — buttons/badges stay bright green in both themes, so their text
+     color must not flip to light in dark mode. */
+  --color-on-brand: #052e22;
 }
 
 body {

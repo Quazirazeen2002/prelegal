@@ -30,7 +30,7 @@ export default function ComparisonView({ upload }: { upload: UploadedDocumentDet
             {doc.comparison.deviations.map((deviation, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-white/10 bg-surface p-5 shadow-xl shadow-black/20"
+                className="rounded-2xl border border-border bg-surface p-5 shadow-xl shadow-black/20"
               >
                 <h3 className="mb-3 text-sm font-semibold text-ink">{deviation.topic}</h3>
                 <dl className="space-y-2 text-sm">

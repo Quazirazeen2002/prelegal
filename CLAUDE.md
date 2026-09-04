@@ -58,6 +58,8 @@ Backend available at http://localhost:8000
 - Dark Navy: `#032147` (headings)
 - Gray Text: `#888888`
 
+The app also ships both a light and a dark theme (a toggle in `AppShell.tsx`'s header, `ThemeToggle.tsx`), defaulting to the visitor's OS preference and remembered thereafter via `localStorage`. `frontend/app/globals.css` defines the surface/border/text tokens (`--color-surface`, `--color-ink`, `--color-border`, etc.) as light values on `:root` with dark overrides under a `.dark` class (Tailwind's `@custom-variant dark`); the brand accent colors above are unchanged across both themes.
+
 ## Implementation Status
 
 ### Completed (PL-3)
@@ -106,6 +108,8 @@ Backend available at http://localhost:8000
 - `backend/app/models.py`'s `UploadedDocument` table stores the extracted text and all analysis results (JSON columns for risks/clauses/comparison) per user, with a `status` of `processing`/`processed`/`error`; `backend/app/routers/uploads.py` runs the full extract-then-analyze pipeline synchronously inside `POST /api/uploads` (this makes the request take ~30-45s for a typical document — a deliberate simplicity-over-latency trade-off, not a bug) and exposes list/get/delete, all ownership-scoped like `/api/documents`.
 - Frontend views (`SummaryView.tsx`, `RiskHighlightsView.tsx`, `ClauseExplanationView.tsx`, `ComparisonView.tsx`, `ExportReportView.tsx`) share `AnalysisStateGate.tsx` to render the right state (no document selected / still processing / analysis failed / results) consistently. `ExportReportView.tsx` downloads a combined PDF report via `AnalysisReportPdfDocument.tsx` (`@react-pdf/renderer`, following the same pattern as the existing `NdaPdfDocument.tsx`).
 - The upload UI deliberately does not claim any compliance certification (no SOC2/GDPR/ISO27001 badges, no "AES-256 encrypted" claims) since the project holds none — the "Your privacy matters" panel states only what's actually true (documents are processed to generate the analysis, not shared beyond that).
+- `AppShell.tsx` keeps every view (drafting and all five analysis views) mounted at all times, toggling visibility with a `hidden` class instead of conditionally rendering them — switching sidebar tabs no longer discards an in-progress draft or the currently selected upload, since the component holding that state is never unmounted.
+- `routers/uploads.py`'s analysis pipeline runs its independent LLM calls (catalog match, summary, risks, clauses) concurrently via a `ThreadPoolExecutor` rather than sequentially, and starts the template comparison call as soon as the match result is known rather than waiting for the other three — cutting wall-clock time from roughly the sum of all five calls down to close to the slowest single call.
 
 ### Current API Endpoints
 

@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
@@ -101,11 +102,28 @@ def upload_document(
     session.refresh(upload)
 
     try:
-        matched_key = match_catalog_type(text)
-        summary = generate_summary(text)
-        risks = detect_risks(text)
-        clauses = explain_clauses(text)
-        comparison = compare_to_template(text, matched_key) if matched_key else None
+        # These four calls are independent, and each is a blocking network
+        # call to the LLM API (I/O-bound, so real threads help despite the
+        # GIL) — running them concurrently instead of sequentially cuts wall
+        # time from ~sum(all calls) down to ~the slowest single call.
+        # compare_to_template depends on the match result, so it's submitted
+        # into the same pool as soon as that result is known, overlapping it
+        # with whichever of the other three calls is still in flight.
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            match_future = executor.submit(match_catalog_type, text)
+            summary_future = executor.submit(generate_summary, text)
+            risks_future = executor.submit(detect_risks, text)
+            clauses_future = executor.submit(explain_clauses, text)
+
+            matched_key = match_future.result()
+            comparison_future = (
+                executor.submit(compare_to_template, text, matched_key) if matched_key else None
+            )
+
+            summary = summary_future.result()
+            risks = risks_future.result()
+            clauses = clauses_future.result()
+            comparison = comparison_future.result() if comparison_future else None
 
         upload.matchedCatalogKey = matched_key
         upload.summary = summary

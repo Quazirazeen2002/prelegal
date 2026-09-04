@@ -19,7 +19,7 @@ export default function NdaDownloadButton({
     <PDFDownloadLink
       document={<NdaPdfDocument blocks={blocks} title={documentTitle} />}
       fileName={fileName}
-      className="inline-flex items-center justify-center rounded-full bg-brand-green px-4 py-2 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark"
+      className="inline-flex items-center justify-center rounded-full bg-brand-green px-4 py-2 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-green-dark"
     >
       {({ loading }) => (loading ? "Preparing PDF…" : "Download PDF")}
     </PDFDownloadLink>

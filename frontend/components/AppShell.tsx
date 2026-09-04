@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import UserMenu from "./UserMenu";
+import ThemeToggle from "./ThemeToggle";
 import DocumentCreator from "./DocumentCreator";
 import UploadView from "./UploadView";
 import SummaryView from "./SummaryView";
@@ -73,13 +74,16 @@ export default function AppShell() {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <aside className="flex w-64 shrink-0 flex-col border-r border-white/10 px-4 py-6">
+      <aside className="flex w-64 shrink-0 flex-col border-r border-border px-4 py-6">
         <div className="mb-8 flex items-center gap-2.5 px-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-sm font-black text-background">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-sm font-black text-on-brand">
             P
           </span>
           <span className="text-base font-bold tracking-tight text-ink">
-            Prelegal <span className="block text-xs font-normal text-ink-muted">Document Assistant</span>
+            Prelegal
+            <span className="block text-xs font-normal text-ink-muted">
+              Draft new legal agreements, or upload one for instant AI analysis.
+            </span>
           </span>
         </div>
 
@@ -93,7 +97,7 @@ export default function AppShell() {
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                 activeView === item.key
                   ? "bg-brand-green/10 text-brand-green"
-                  : "text-ink-muted hover:bg-white/5 hover:text-ink"
+                  : "text-ink-muted hover:bg-overlay-faint hover:text-ink"
               }`}
             >
               <span aria-hidden="true">{item.icon}</span>
@@ -104,28 +108,44 @@ export default function AppShell() {
       </aside>
 
       <div className="flex-1">
-        <header className="border-b border-white/10">
+        <header className="border-b border-border">
           <div className="flex items-center justify-between px-6 py-4 sm:px-8">
             <div>
               <h1 className="text-lg font-bold tracking-tight text-ink">{activeNavItem.title}</h1>
               <p className="text-xs text-ink-muted">{activeNavItem.subtitle}</p>
             </div>
-            <UserMenu />
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
+              <UserMenu />
+            </div>
           </div>
         </header>
 
+        {/* Every view stays mounted and is only hidden (not unmounted) when
+            inactive, so switching tabs never loses in-progress state — a
+            half-drafted document or the currently selected upload. */}
         <main className="px-6 py-8 sm:px-8">
-          {activeView === "draft" && <DocumentCreator />}
-
-          {activeView === "upload" && (
+          <div className={activeView === "draft" ? "" : "hidden"}>
+            <DocumentCreator />
+          </div>
+          <div className={activeView === "upload" ? "" : "hidden"}>
             <UploadView selectedUpload={selectedUpload} onSelectUpload={setSelectedUpload} />
-          )}
-
-          {activeView === "summary" && <SummaryView upload={selectedUpload} />}
-          {activeView === "risks" && <RiskHighlightsView upload={selectedUpload} />}
-          {activeView === "clauses" && <ClauseExplanationView upload={selectedUpload} />}
-          {activeView === "comparison" && <ComparisonView upload={selectedUpload} />}
-          {activeView === "export" && <ExportReportView upload={selectedUpload} />}
+          </div>
+          <div className={activeView === "summary" ? "" : "hidden"}>
+            <SummaryView upload={selectedUpload} />
+          </div>
+          <div className={activeView === "risks" ? "" : "hidden"}>
+            <RiskHighlightsView upload={selectedUpload} />
+          </div>
+          <div className={activeView === "clauses" ? "" : "hidden"}>
+            <ClauseExplanationView upload={selectedUpload} />
+          </div>
+          <div className={activeView === "comparison" ? "" : "hidden"}>
+            <ComparisonView upload={selectedUpload} />
+          </div>
+          <div className={activeView === "export" ? "" : "hidden"}>
+            <ExportReportView upload={selectedUpload} />
+          </div>
         </main>
       </div>
     </div>

@@ -181,7 +181,7 @@ export default function DocumentCreator() {
             <button
               type="button"
               onClick={() => setShowMyDocuments(true)}
-              className="rounded-full border border-white/15 px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
+              className="rounded-full border border-border-strong px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-overlay hover:text-ink"
             >
               My Documents
             </button>
@@ -189,7 +189,7 @@ export default function DocumentCreator() {
           <button
             type="button"
             onClick={handleNewDocument}
-            className="rounded-full border border-white/15 px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
+            className="rounded-full border border-border-strong px-3.5 py-1.5 text-sm font-semibold text-ink-muted transition-colors hover:bg-overlay hover:text-ink"
           >
             New Document
           </button>
@@ -201,7 +201,7 @@ export default function DocumentCreator() {
           <ChatPanel messages={messages} onMessagesChange={setMessages} onSend={handleSend} />
 
           {phase.kind === "detecting" && (
-            <div className="flex min-h-[24rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-surface/60 p-8 text-center lg:sticky lg:top-8 lg:self-start">
+            <div className="flex min-h-[24rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border-strong bg-surface/60 p-8 text-center lg:sticky lg:top-8 lg:self-start">
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-green/10 text-2xl">
                 📄
               </span>
@@ -212,7 +212,7 @@ export default function DocumentCreator() {
           )}
 
           {phase.kind === "generic-loading" && (
-            <div className="flex min-h-[24rem] items-center justify-center rounded-2xl border border-dashed border-white/15 bg-surface/60 p-8 text-sm text-ink-muted lg:sticky lg:top-8 lg:self-start">
+            <div className="flex min-h-[24rem] items-center justify-center rounded-2xl border border-dashed border-border-strong bg-surface/60 p-8 text-sm text-ink-muted lg:sticky lg:top-8 lg:self-start">
               Loading the document template…
             </div>
           )}
@@ -251,7 +251,7 @@ export default function DocumentCreator() {
               type="button"
               onClick={handleSave}
               disabled={saveState === "saving"}
-              className="rounded-full bg-brand-green px-5 py-2 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-full bg-brand-green px-5 py-2 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saveState === "saving" ? "Saving…" : "Save to My Documents"}
             </button>

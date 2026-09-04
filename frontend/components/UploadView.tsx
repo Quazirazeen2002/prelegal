@@ -113,7 +113,7 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
 
   if (!user) {
     return (
-      <div className="flex min-h-[24rem] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/15 bg-surface/60 p-8 text-center">
+      <div className="flex min-h-[24rem] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-border-strong bg-surface/60 p-8 text-center">
         <p className="text-sm text-ink-muted">Sign in (top right) to upload and analyze documents.</p>
       </div>
     );
@@ -135,7 +135,7 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
             if (file) handleFile(file);
           }}
           className={`flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-14 text-center transition-colors ${
-            isDragging ? "border-brand-green bg-brand-green/5" : "border-white/15 bg-surface/60"
+            isDragging ? "border-brand-green bg-brand-green/5" : "border-border-strong bg-surface/60"
           }`}
         >
           <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-green/10 text-3xl">
@@ -149,7 +149,7 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="rounded-full bg-brand-green px-5 py-2 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-full bg-brand-green px-5 py-2 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:opacity-60"
           >
             Browse files
           </button>
@@ -189,7 +189,7 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
                 key={u.id}
                 onClick={() => handleSelectExisting(u.id)}
                 className={`flex cursor-pointer items-center justify-between gap-3 rounded-xl border p-4 transition-colors hover:border-brand-green/30 hover:bg-brand-green/5 ${
-                  selectedUpload?.id === u.id ? "border-brand-green/40 bg-brand-green/5" : "border-white/10"
+                  selectedUpload?.id === u.id ? "border-brand-green/40 bg-brand-green/5" : "border-border"
                 }`}
               >
                 <div>
@@ -220,7 +220,7 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
       </div>
 
       <div className="space-y-4">
-        <div className="rounded-2xl border border-white/10 bg-surface p-5">
+        <div className="rounded-2xl border border-border bg-surface p-5">
           <h3 className="mb-3 text-sm font-semibold text-ink">✨ What you&apos;ll get</h3>
           <ul className="space-y-3">
             {FEATURES.map((feature) => (
@@ -239,7 +239,7 @@ export default function UploadView({ selectedUpload, onSelectUpload }: Props) {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-surface p-5">
+        <div className="rounded-2xl border border-border bg-surface p-5">
           <h3 className="mb-3 text-sm font-semibold text-ink">Your privacy matters</h3>
           <ul className="space-y-2 text-xs text-ink-muted">
             <li>Only you can see documents you upload — they&apos;re tied to your account.</li>

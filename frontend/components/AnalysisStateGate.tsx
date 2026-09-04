@@ -14,7 +14,7 @@ type Props = {
 export default function AnalysisStateGate({ upload, children }: Props) {
   if (!upload) {
     return (
-      <div className="flex min-h-[24rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-surface/60 p-8 text-center">
+      <div className="flex min-h-[24rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border-strong bg-surface/60 p-8 text-center">
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-green/10 text-2xl">
           📄
         </span>
@@ -27,7 +27,7 @@ export default function AnalysisStateGate({ upload, children }: Props) {
 
   if (upload.status === "processing") {
     return (
-      <div className="flex min-h-[24rem] items-center justify-center rounded-2xl border border-dashed border-white/15 bg-surface/60 p-8 text-sm text-ink-muted">
+      <div className="flex min-h-[24rem] items-center justify-center rounded-2xl border border-dashed border-border-strong bg-surface/60 p-8 text-sm text-ink-muted">
         Analyzing &ldquo;{upload.filename}&rdquo;…
       </div>
     );

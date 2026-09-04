@@ -11,7 +11,7 @@ export default function ClauseExplanationView({ upload }: { upload: UploadedDocu
           {doc.clauses?.map((clause, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-white/10 bg-surface p-5 shadow-xl shadow-black/20"
+              className="rounded-2xl border border-border bg-surface p-5 shadow-xl shadow-black/20"
             >
               <h3 className="mb-1.5 text-sm font-semibold text-ink">{clause.clauseTitle}</h3>
               <p className="text-sm leading-relaxed text-ink-muted">{clause.plainEnglish}</p>

@@ -41,7 +41,7 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
   }
 
   return (
-    <div className="flex h-[75vh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-xl shadow-black/20">
+    <div className="flex h-[75vh] flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-xl shadow-black/20">
       <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
         {messages.map((message, i) => (
           <div
@@ -51,7 +51,7 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
             <p
               className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
                 message.role === "user"
-                  ? "rounded-br-sm bg-brand-green font-medium text-background"
+                  ? "rounded-br-sm bg-brand-green font-medium text-on-brand"
                   : "rounded-bl-sm bg-surface-hover text-ink"
               }`}
             >
@@ -77,13 +77,13 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
         </p>
       )}
 
-      <form onSubmit={handleSubmit} className="flex gap-2 border-t border-white/10 bg-black/20 p-3">
+      <form onSubmit={handleSubmit} className="flex gap-2 border-t border-border bg-black/20 p-3">
         <label className="sr-only" htmlFor="chat-input">
           Message
         </label>
         <input
           id="chat-input"
-          className="flex-1 rounded-full border border-white/10 bg-surface-hover px-4 py-2.5 text-sm text-ink shadow-sm transition-shadow placeholder:text-ink-muted focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30"
+          className="flex-1 rounded-full border border-border bg-surface-hover px-4 py-2.5 text-sm text-ink shadow-sm transition-shadow placeholder:text-ink-muted focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your reply…"
@@ -92,7 +92,7 @@ export default function ChatPanel({ messages, onMessagesChange, onSend }: Props)
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="rounded-full bg-brand-green px-5 py-2.5 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-ink-muted"
+          className="rounded-full bg-brand-green px-5 py-2.5 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:bg-overlay disabled:text-ink-muted"
         >
           Send
         </button>

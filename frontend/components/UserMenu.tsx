@@ -16,7 +16,7 @@ export default function UserMenu() {
         <button
           type="button"
           onClick={() => setShowAuthModal(true)}
-          className="rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark"
+          className="rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-green-dark"
         >
           Sign in
         </button>
@@ -31,7 +31,7 @@ export default function UserMenu() {
       <button
         type="button"
         onClick={() => signOut()}
-        className="rounded-full border border-white/15 px-3 py-1.5 font-medium text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
+        className="rounded-full border border-border-strong px-3 py-1.5 font-medium text-ink-muted transition-colors hover:bg-overlay hover:text-ink"
       >
         Sign out
       </button>

@@ -20,7 +20,7 @@ export default function RiskHighlightsView({ upload }: { upload: UploadedDocumen
           {doc.risks?.map((risk, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-white/10 bg-surface p-5 shadow-xl shadow-black/20"
+              className="rounded-2xl border border-border bg-surface p-5 shadow-xl shadow-black/20"
             >
               <div className="mb-2 flex items-center justify-between gap-3">
                 <h3 className="text-sm font-semibold text-ink">{risk.title}</h3>
