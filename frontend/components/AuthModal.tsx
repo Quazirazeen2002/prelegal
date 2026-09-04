@@ -34,17 +34,17 @@ export default function AuthModal({ onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-brand-navy/60 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-7 shadow-2xl shadow-brand-navy/20">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-surface p-7 shadow-2xl shadow-black/40">
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-lg font-bold tracking-tight text-brand-navy">
+          <h2 className="text-lg font-bold tracking-tight text-ink">
             {mode === "signin" ? "Sign in" : "Create an account"}
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="rounded-full p-1 text-brand-gray transition-colors hover:bg-slate-100 hover:text-slate-700"
+            className="rounded-full p-1 text-ink-muted transition-colors hover:bg-white/10 hover:text-ink"
           >
             ✕
           </button>
@@ -52,7 +52,7 @@ export default function AuthModal({ onClose }: Props) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="auth-email" className="mb-1 block text-sm font-medium text-slate-700">
+            <label htmlFor="auth-email" className="mb-1 block text-sm font-medium text-ink-muted">
               Email
             </label>
             <input
@@ -61,11 +61,11 @@ export default function AuthModal({ onClose }: Props) {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm shadow-sm transition-shadow focus:border-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue/30"
+              className="w-full rounded-lg border border-white/10 bg-surface-hover px-3 py-2.5 text-sm text-ink shadow-sm transition-shadow focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30"
             />
           </div>
           <div>
-            <label htmlFor="auth-password" className="mb-1 block text-sm font-medium text-slate-700">
+            <label htmlFor="auth-password" className="mb-1 block text-sm font-medium text-ink-muted">
               Password
             </label>
             <input
@@ -75,12 +75,12 @@ export default function AuthModal({ onClose }: Props) {
               minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm shadow-sm transition-shadow focus:border-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue/30"
+              className="w-full rounded-lg border border-white/10 bg-surface-hover px-3 py-2.5 text-sm text-ink shadow-sm transition-shadow focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30"
             />
           </div>
 
           {error && (
-            <p role="alert" className="text-sm text-red-600">
+            <p role="alert" className="text-sm text-red-400">
               {error}
             </p>
           )}
@@ -88,7 +88,7 @@ export default function AuthModal({ onClose }: Props) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-brand-purple px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-purple-dark disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-brand-green px-4 py-2.5 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? "Please wait…" : mode === "signin" ? "Sign in" : "Sign up"}
           </button>
@@ -97,7 +97,7 @@ export default function AuthModal({ onClose }: Props) {
         <button
           type="button"
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-          className="mt-4 w-full text-center text-sm font-medium text-brand-blue hover:underline"
+          className="mt-4 w-full text-center text-sm font-medium text-brand-green hover:underline"
         >
           {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
         </button>

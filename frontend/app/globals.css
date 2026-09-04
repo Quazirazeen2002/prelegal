@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f7fb;
-  --foreground: #0f1e2e;
+  --background: #14161b;
+  --foreground: #f4f5f7;
 }
 
 @theme inline {
@@ -11,7 +11,18 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Brand palette (see CLAUDE.md "Color Scheme") */
+  /* Codecademy-inspired dark shell: charcoal surfaces + a bold green accent.
+     The document preview itself stays light (see PreviewPanel/NdaPreview) —
+     a dark "paper" would look odd for something meant to read as a printable
+     legal document. See CLAUDE.md "Color Scheme" for the original palette;
+     brand-navy/blue/purple are kept for the parts of the app still using it. */
+  --color-surface: #1c1f26;
+  --color-surface-hover: #262a33;
+  --color-border-dark: #2e323d;
+  --color-ink: #f4f5f7;
+  --color-ink-muted: #9aa0ab;
+  --color-brand-green: #1fe0a3;
+  --color-brand-green-dark: #14b384;
   --color-brand-yellow: #ecad0a;
   --color-brand-blue: #209dd7;
   --color-brand-blue-dark: #15789f;
@@ -20,13 +31,6 @@
   --color-brand-navy: #032147;
   --color-brand-navy-light: #0b3866;
   --color-brand-gray: #888888;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
