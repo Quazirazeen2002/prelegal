@@ -19,7 +19,7 @@ describe("UserMenu", () => {
 
     render(
       <AuthProvider>
-        <UserMenu onOpenMyDocuments={vi.fn()} />
+        <UserMenu />
       </AuthProvider>
     );
 
@@ -29,23 +29,19 @@ describe("UserMenu", () => {
     expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
   });
 
-  it("shows the user's email and a My Documents link when signed in", async () => {
+  it("shows the user's email and a Sign out button when signed in", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockReturnValue(jsonResponse({ id: 1, email: "alice@example.com", created_at: "" }))
     );
-    const onOpenMyDocuments = vi.fn();
 
     render(
       <AuthProvider>
-        <UserMenu onOpenMyDocuments={onOpenMyDocuments} />
+        <UserMenu />
       </AuthProvider>
     );
 
     expect(await screen.findByText("alice@example.com")).toBeInTheDocument();
-
-    const user = userEvent.setup();
-    await user.click(screen.getByText("My Documents"));
-    expect(onOpenMyDocuments).toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Sign out" })).toBeInTheDocument();
   });
 });

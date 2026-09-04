@@ -4,11 +4,7 @@ import { useState } from "react";
 import { useAuth } from "./AuthContext";
 import AuthModal from "./AuthModal";
 
-type Props = {
-  onOpenMyDocuments: () => void;
-};
-
-export default function UserMenu({ onOpenMyDocuments }: Props) {
+export default function UserMenu() {
   const { user, signOut, isLoading } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
@@ -20,7 +16,7 @@ export default function UserMenu({ onOpenMyDocuments }: Props) {
         <button
           type="button"
           onClick={() => setShowAuthModal(true)}
-          className="rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold text-background shadow-sm transition-colors hover:bg-brand-green-dark"
+          className="rounded-full bg-brand-purple px-4 py-1.5 text-sm font-bold text-on-brand shadow-sm transition-colors hover:bg-brand-purple-dark"
         >
           Sign in
         </button>
@@ -31,18 +27,11 @@ export default function UserMenu({ onOpenMyDocuments }: Props) {
 
   return (
     <div className="flex items-center gap-4 text-sm">
-      <button
-        type="button"
-        onClick={onOpenMyDocuments}
-        className="font-medium text-white/90 transition-colors hover:text-white hover:underline"
-      >
-        My Documents
-      </button>
-      <span className="hidden text-white/50 sm:inline">{user.email}</span>
+      <span className="hidden text-canvas-ink-muted sm:inline">{user.email}</span>
       <button
         type="button"
         onClick={() => signOut()}
-        className="rounded-full border border-white/25 px-3 py-1.5 font-medium text-white/90 transition-colors hover:bg-white/10"
+        className="rounded-full border border-canvas-border-strong px-3 py-1.5 font-medium text-canvas-ink-muted transition-colors hover:bg-canvas-overlay hover:text-canvas-ink"
       >
         Sign out
       </button>
